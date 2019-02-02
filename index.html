@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Breaking The Union</title>
+<style>.bar,.charBox{height:100%}*{margin:0;padding:0;user-select:none}li{list-style-type:none}body{background-color:#000}#imgChar{width:13vh;filter:brightness(265%) contrast(800%)}.actionBtn{font-size:3.2vh;margin:.1vh 1vw}.actionBtn:hover{background-color:#adff2f;color:#000}.charBox{border:1px solid #adff2f;border-radius:2px;display:flex;flex-flow:column;font-family:VT323,Courier}.enemy{border:1px solid red;color:red!important}.charBox .row{border:1px solid #adff2f;margin:.5%}.charBox.enemy .row{border:1px solid red}.items{overflow:scroll}.charBox .row.header{flex:0 1 auto;display:flex}.charBox .row.content{flex:0 0 auto;display:flex;padding:1%;justify-content:space-between}.charBox .row.content .actionBox{border:1px solid #adff2f;width:49%}.charBox.enemy .row.content .actionBox{width:49%;border:1px solid red}.charBox .row.content .stats{border:1px solid #adff2f;width:49%}.barBox{width:16vw;height:30%;background-color:#777;margin:.4vh .3vw;text-align:center}#play,#sound{margin-top:0}.barBox .data{position:relative;top:-5vh;font-size:4vh}.charBox .row.footer{flex:0 1 40px;height:100%}#textbox{font-size:5vh}#hp{background-color:#7a0303}#energy{background-color:#0000b8}#wg{background-color:#a7a744}#overlay{position:fixed;display:block;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:40;pointer-events:none}#musicplayer,.gameOver{background-color:#000;position:absolute;z-index:39;transition:1s}#terminal{height:44.4vh;width:37.5vw;top:6.85vh;left:59.11vw;background-color:#000;position:absolute;color:#adff2f}.hiddenMusic{left:-5.3vw}#dialog{display:none}#musicplayer{display:flex!important;height:5vh;width:12vw;top:17vh;left:-5.2vw;border:1px solid #adff2f;color:#adff2f;font-size:6vh}.button,.gameOver{border:2px solid #adff2f}#next,#previous,#toggle{margin-top:-1.5vh;margin-left:.3vw;margin-right:.3vw}#sound{font-size:5vh}#play{font-size:4vh;margin-left:.2vw}.down,.gameOver{margin-top:0!important}.musicUp{left:3.2vw!important}.pause{margin-left:.6vw!important}.button,.header,.reason{margin-left:auto;margin-right:auto}.gameOver{display:none;flex-direction:column;height:25vh;width:53vw;top:38.85vh;left:3.2vw}.buttons,.visible{display:flex}.header{margin-top:2vh;color:#adff2f;font-size:4.6vw;font-family:monospace}.buttons,.message,.reason{font-size:1.6vw}.charBox.enemy .row.header{color:red!important}.buttons,.dot,.message,.reason{color:#adff2f;font-family:monospace}.reason{margin-top:.5vh}.buttons{margin-top:1.2vh;flex-direction:row}.button{padding:1vh}.down,.up{display:flex!important;height:25vh;width:37.25vw;top:6.85vh;left:59.2vw;background-color:#000;position:absolute;z-index:39;transition:1s;border:1px solid #adff2f}.up{margin-top:-26vh!important}.crt::after,.crt::before{content:" ";position:absolute;top:0;left:0;bottom:0;right:0;z-index:2;pointer-events:none}.message,.portrait{margin-top:4vh;margin-left:2vw}.message{margin-right:2vw;width:20vw}.dot{display:none;position:absolute;margin-top:20vh;margin-right:1vw;margin-left:18vw;font-size:1.3vw}.blinking{display:block;animation:blinker 1.5s linear infinite}@keyframes blinker{50%{opacity:0}}#isocanvas{margin-top:17.4vh;margin-left:3.125vw}@keyframes flicker{0%{opacity:.27861}5%{opacity:.34769}10%{opacity:.23604}15%{opacity:.90626}20%{opacity:.18128}25%{opacity:.83891}30%{opacity:.65583}35%{opacity:.67807}40%{opacity:.26559}45%{opacity:.84693}50%{opacity:.96019}55%{opacity:.08594}60%{opacity:.20313}65%{opacity:.71988}70%{opacity:.53455}75%{opacity:.37288}80%{opacity:.71428}85%{opacity:.70419}90%{opacity:.7003}95%{opacity:.36108}100%{opacity:.24387}}@keyframes textShadow{0%{text-shadow:.44px 0 1px rgba(0,30,255,.5),-.44px 0 1px rgba(255,0,80,.3),0 0 3px}5%{text-shadow:2.79px 0 1px rgba(0,30,255,.5),-2.79px 0 1px rgba(255,0,80,.3),0 0 3px}10%{text-shadow:.03px 0 1px rgba(0,30,255,.5),-.03px 0 1px rgba(255,0,80,.3),0 0 3px}15%{text-shadow:.4px 0 1px rgba(0,30,255,.5),-.4px 0 1px rgba(255,0,80,.3),0 0 3px}20%{text-shadow:3.48px 0 1px rgba(0,30,255,.5),-3.48px 0 1px rgba(255,0,80,.3),0 0 3px}25%{text-shadow:1.61px 0 1px rgba(0,30,255,.5),-1.61px 0 1px rgba(255,0,80,.3),0 0 3px}30%{text-shadow:.7px 0 1px rgba(0,30,255,.5),-.7px 0 1px rgba(255,0,80,.3),0 0 3px}35%{text-shadow:3.9px 0 1px rgba(0,30,255,.5),-3.9px 0 1px rgba(255,0,80,.3),0 0 3px}40%{text-shadow:3.87px 0 1px rgba(0,30,255,.5),-3.87px 0 1px rgba(255,0,80,.3),0 0 3px}45%{text-shadow:2.23px 0 1px rgba(0,30,255,.5),-2.23px 0 1px rgba(255,0,80,.3),0 0 3px}50%,80%{text-shadow:.08px 0 1px rgba(0,30,255,.5),-.08px 0 1px rgba(255,0,80,.3),0 0 3px}55%{text-shadow:2.38px 0 1px rgba(0,30,255,.5),-2.38px 0 1px rgba(255,0,80,.3),0 0 3px}60%{text-shadow:2.2px 0 1px rgba(0,30,255,.5),-2.2px 0 1px rgba(255,0,80,.3),0 0 3px}65%{text-shadow:2.86px 0 1px rgba(0,30,255,.5),-2.86px 0 1px rgba(255,0,80,.3),0 0 3px}70%{text-shadow:.49px 0 1px rgba(0,30,255,.5),-.49px 0 1px rgba(255,0,80,.3),0 0 3px}75%{text-shadow:1.89px 0 1px rgba(0,30,255,.5),-1.89px 0 1px rgba(255,0,80,.3),0 0 3px}85%{text-shadow:.1px 0 1px rgba(0,30,255,.5),-.1px 0 1px rgba(255,0,80,.3),0 0 3px}90%{text-shadow:3.44px 0 1px rgba(0,30,255,.5),-3.44px 0 1px rgba(255,0,80,.3),0 0 3px}95%{text-shadow:2.18px 0 1px rgba(0,30,255,.5),-2.18px 0 1px rgba(255,0,80,.3),0 0 3px}100%{text-shadow:2.62px 0 1px rgba(0,30,255,.5),-2.62px 0 1px rgba(255,0,80,.3),0 0 3px}}.crt::after{display:block;background:rgba(18,16,16,.1);opacity:0;animation:flicker .15s infinite}.crt::before{display:block;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.25) 50%),linear-gradient(90deg,rgba(255,0,0,.06),rgba(0,255,0,.02),rgba(0,0,255,.06));background-size:100% 2px,3px 100%}.crt{animation:textShadow 1.6s infinite}</style>
+<script>
+var Isometric = {
+            fps: 17,
+            gameOver: !1,
+            gamePaused: !1,
+            gamePausedf: !1,
+            cameraOffX: 0,
+            cameraOffY: 0,
+            cameraFromX: void 0,
+            cameraFromY: void 0,
+            cameraToX: void 0,
+            cameraToY: void 0,
+            cameraMoving: !1,
+            cameraSpeed: void 0,
+            cameraStep: void 0,
+            glowQueue: void 0,
+            glowStep: void 0,
+            highlightQueue: void 0,
+            highlightStep: void 0,
+            enemiesHighlighted: !1,
+            timedTArray: void 0,
+            spatialTArray: void 0,
+            dialogQueue: void 0,
+            dialog: void 0,
+            dialogVisible: !1,
+            dialogClock: void 0,
+            dialogSpeed: 30,
+            dialogCurrentCharacter: void 0,
+            dialogCompleted: void 0,
+            tileColumnOffset: 100,
+            tileRowOffset: 50,
+            originX: 0,
+            originY: 0,
+            Xtiles: 0,
+            Ytiles: 0,
+            selectedTileX: -1,
+            selectedTileY: -1,
+            selectedChar: -1,
+            context: void 0,
+            canvas: void 0,
+            tileImages: void 0,
+            sprites: void 0,
+            friends: void 0,
+            enemies: void 0,
+            foes: void 0,
+            collisionMatrix: void 0,
+            objectMatrix: void 0,
+            modifierMatrix: void 0,
+            panningX: void 0,
+            panningY: void 0,
+            mouseOut: !1,
+            displayDistances: !1,
+            willHack: !1,
+            willAttack: !1,
+            willMove: !1,
+            itemMatrix: void 0,
+            itemQueue: void 0,
+            faces: void 0,
+            visited: void 0,
+            load: function() {
+                this.tileImages = new Array, this.sprites = new Array, this.friends = new Array, this.enemies = new Array, this.collisionMatrix = new Array, this.terrainMatrix = new Array, this.modifierMatrix = new Array, this.timedTArray = new Array, this.spatialTArray = new Array, this.dialogQueue = new Array, this.glowQueue = new Array, this.glowStep = void 0;
+                var e = 0,
+                    t = IsometricMap.tiles.length + IsometricMap.chars.length;
+                this.highlightQueue = new Array, this.highlightStep = void 0, this.itemMatrix = new Array, this.itemQueue = new Array;
+                for (var i = this, s = 0; s < IsometricMap.tiles.length; s++) this.tileImages[s] = new Image, this.tileImages[s].src = IsometricMap.tiles[s], this.tileImages[s].onload = function() {
+                    e++
+                };
+                for (s = 0; s < IsometricMap.chars.length; s++) {
+                    let {
+                        src: t,
+                        sheetX: i,
+                        sheetY: a,
+                        frames: l
+                    } = IsometricMap.chars[s], o = new Image;
+                    o.src = t, o.onload = function() {
+                        e++
+                    }, this.sprites[s] = new spriteSheet(o, i, a, l)
+                }
+                for (s = 0; s < IsometricMap.map.length; s++) this.collisionMatrix[s] = new Array(IsometricMap.map[s].length), this.itemMatrix[s] = new Array(IsometricMap.map[s].length), this.modifierMatrix[s] = new Array(IsometricMap.map[s].length);
+                for (let e = 0; e < IsometricMap.allies.length; e++) {
+                    let {
+                        type: t,
+                        positionX: i,
+                        positionY: s
+                    } = IsometricMap.allies[e];
+                    this.friends[e] = new Instance(t, i, s), this.collisionMatrix[i][s] = e
+                }
+                for (let e = 0; e < IsometricMap.enemies.length; e++) {
+                    let {
+                        type: t,
+                        positionX: i,
+                        positionY: s,
+                        level: a
+                    } = IsometricMap.enemies[e];
+                    this.enemies[e] = new Instance(t, i, s, 1, a), this.collisionMatrix[i][s] = -e - 1
+                }
+                for (let e = 0; e < RefData.Items.locations.length; e++) this.itemMatrix[RefData.Items.locations[e].positionX][RefData.Items.locations[e].positionY] = RefData.Items.locations[e].type, this.itemQueue.push(RefData.Items.locations[e]), IsometricMap.triggers.push({
+                    type: "spatial",
+                    x: RefData.Items.locations[e].positionX,
+                    y: RefData.Items.locations[e].positionY,
+                    actions: `pickup(${RefData.Items.locations[e].positionX},${RefData.Items.locations[e].positionY})`
+                });
+                for (let e = 0; e < IsometricMap.triggers.length; e++)
+                    if ("timed" == IsometricMap.triggers[e].type) {
+                        let {
+                            secs: t,
+                            actions: i
+                        } = IsometricMap.triggers[e];
+                        this.timedTArray.push(new timedTrigger(t, i))
+                    } else if ("spatial" == IsometricMap.triggers[e].type) {
+                    let {
+                        x: t,
+                        y: i,
+                        actions: s
+                    } = IsometricMap.triggers[e];
+                    this.spatialTArray.push(new spatialTrigger(t, i, s))
+                }
+                setInterval(function() {
+                    e >= t && i.run()
+                }, 1e3 / this.fps)
+            },
+            run: function() {
+                this.canvas = document.getElementById("isocanvas"), window.oncontextmenu = (e => e.preventDefault()), this.dialog = document.getElementById("dialog"), this.context = this.canvas.getContext("2d"), this.Xtiles = IsometricMap.map.length, this.Ytiles = IsometricMap.map[0].length;
+                let e = this;
+                window.onresize = function() {
+                    e.updateCanvasSize(), e.redrawTiles()
+                }, this.canvas.onmousemove = function(t) {
+                    e.gamePaused || e.handleMouseMove(t)
+                }, window.onclick = function(t) {
+                    e.handleClick()
+                }, this.canvas.onmouseout = function() {
+                    e.selectedChar = -1, e.mouseOut = !0, e.panningX = 0, e.panningY = 0
+                }, this.canvas.onmouseover = function() {
+                    e.mouseOut = !1
+                }, this.dialog.onclick = function(t) {
+                    e.dialogVisible && (e.dialogCompleted || (e.dialogCurrentCharacter = IsometricMap.dialogs[e.dialogQueue[0]].message.length), e.nextDialog())
+                }, this.checkTimedTriggers(), this.processDialogs(), e.gameOver || (this.updateCamera(), this.updateCanvasSize(), this.redrawTiles(), e.gamePaused && (e.gamePausedf = !0))
+            },
+            nextDialog: function() {
+                if (this.dialogCompleted) {
+                    this.dialogCompleted = void 0, this.dialogQueue.splice(0, 1), this.dialogCurrentCharacter = void 0, document.getElementsByClassName("message")[0].innerHTML = "", document.getElementsByClassName("dot")[0].classList.remove("blinking")
+                } else this.dialogCurrentCharacter = IsometricMap.dialogs[this.dialogQueue[0]].message.length;
+                this.dialogQueue.length < 1 && (this.gamePausedf = !1, this.gamePaused = !1, this.dialogCompleted = void 0, this.dialogVisible = !1, this.dialog.classList.remove("down"), this.dialog.classList.add("up"))
+            },
+            processDialogs: function() {
+                if (!this.dialogCompleted && this.dialogQueue.length > 0) {
+                    null == this.dialogCurrentCharacter && (this.dialogCurrentCharacter = 0, this.dialogCompleted = !1, this.dialogClock = Date.now());
+                    let {
+                        message: t
+                    } = IsometricMap.dialogs[this.dialogQueue[0]];
+                    this.dialogVisible = !0, this.dialog.classList.remove("up"), this.dialog.classList.add("down");
+                    let i = document.getElementsByClassName("message")[0];
+                    if (this.dialogCurrentCharacter < t.length && this.dialogClock + this.dialogSpeed < Date.now()) {
+                        i.innerHTML += t.charAt(this.dialogCurrentCharacter), this.dialogClock = Date.now(), this.dialogCurrentCharacter++
+                    }
+                    if (this.dialogCurrentCharacter >= t.length) {
+                        this.dialogCompleted = !0, i.innerHTML = t, document.getElementsByClassName("dot")[0].classList.add("blinking")
+                    }
+                }
+            },
+            parseActions: function(e) {
+                let t = e.split("),");
+                for (let e = 0; e < t.length; e++) {
+                    if (null == t[e]) continue;
+                    let i = t[e].indexOf("("),
+                        s = t[e].slice(0, i).trim(),
+                        a = t[e].slice(i + 1);
+                    a.indexOf(")") > 0 && (a = a.slice(0, -1)), '"' === a[0] && (a = (a = a.slice(1)).slice(0, -1)), a = a.indexOf(",") > 0 ? a.split(",") : [a], this.dispatchAction(s, a)
+                }
+            },
+            dispatchAction: function(e, t) {
+                switch (e) {
+                    case "displayDialog":
+                        for (let e = 0; e < t.length; e++) this.dialogQueue.push(t[e]);
+                        break;
+                    case "displayDialogP":
+                        for (let e = 0; e < t.length; e++) this.gamePaused = !0, this.panningX = 0, this.panningY = 0, this.dialogQueue.push(t[e]);
+                        break;
+                    case "centerCamera":
+                        this.centerCamera(t[0], t[1]);
+                        break;
+                    case "translateCamera":
+                        this.translateCamera(t[0], t[1], t[2], t[3]);
+                        break;
+                    case "gameOver":
+                        this.gameOver = !0;
+                        let i = document.getElementsByClassName("gameOver")[0];
+                        document.getElementsByClassName("reason")[0].innerHTML = t[0], i.classList.add("visible");
+                        break;
+                    case "glow":
+                        this.glowQueue.push({
+                            x: t[0],
+                            y: t[1]
+                        });
+                        break;
+                    case "highlight":
+                        this.highlightQueue.push({
+                            x: t[0],
+                            y: t[1]
+                        });
+                        break;
+                    case "pickup":
+                        for (let e = 0; e < this.friends.length; e++) this.friends[e].positionX == t[0] && this.friends[e].positionY == t[1] && this.friends[e].lootItem();
+                        break;
+                    default:
+                        console.log("[", e, "]Unknow action:", t)
+                }
+            },
+            checkTimedTriggers: function() {
+                let e = Date.now();
+                for (let t = 0; t < this.timedTArray.length; t++) {
+                    let {
+                        begin: i,
+                        secs: s,
+                        actions: a
+                    } = this.timedTArray[t];
+                    if (e > i + 1e3 * s) {
+                        this.parseActions(a);
+                        this.timedTArray.splice(t, 1)
+                    }
+                }
+            },
+            displayRoute: function() {
+                let {
+                    positionX: e,
+                    positionY: t,
+                    walkingRoute: i
+                } = this.friends[this.selectedChar];
+                for (let e = 0; e < i.length - 1; e++) {
+                    let t = i[e].x * this.tileColumnOffset / 2 + i[e].y * this.tileColumnOffset / 2 + this.originX + this.tileRowOffset + this.cameraOffX,
+                        s = i[e].y * this.tileRowOffset / 2 - i[e].x * this.tileRowOffset / 2 + this.originY + this.cameraOffY,
+                        a = i[e + 1].x * this.tileColumnOffset / 2 + i[e + 1].y * this.tileColumnOffset / 2 + this.originX + this.tileRowOffset + this.cameraOffX,
+                        l = i[e + 1].y * this.tileRowOffset / 2 - i[e + 1].x * this.tileRowOffset / 2 + this.originY + this.cameraOffY;
+                    this.drawLine(t, s + this.tileRowOffset / 2, a, l + this.tileRowOffset / 2, "yellow")
+                }
+            },
+            translateCamera: function(e, t, i, s, a = 300) {
+                this.cameraFromX = parseInt(e), this.cameraFromY = parseInt(t), this.cameraToX = parseInt(i), this.cameraToY = parseInt(s), this.cameraMoving = !0, this.cameraSpeed = a, this.cameraStep = void 0
+            },
+            centerCamera: function(e, t) {
+                this.cameraOffX = -this.originX - (e * this.tileColumnOffset / 2 + t * this.tileColumnOffset / 2) + this.canvas.width / 2, this.cameraOffY = this.originY + e * this.tileRowOffset / 2 - (t * this.tileColumnOffset / 2 + this.originY) + this.canvas.height - this.originY
+            },
+            updateCamera: function() {
+                if (this.cameraMoving) {
+                    null == this.cameraStep && (this.cameraStep = Date.now());
+                    let e = 0,
+                        t = 0;
+                    if (Date.now() < this.cameraStep + this.cameraSpeed) return;
+                    return this.cameraStep = Date.now(), this.cameraFromX < this.cameraToX ? e = 1 : this.cameraFromX > this.cameraToX && (e = -1), this.cameraFromY < this.cameraToY ? t = 1 : this.cameraFromY > this.cameraToY && (t = -1), this.cameraFromX == this.cameraToX && this.cameraFromY == this.cameraToY ? (this.cameraMoving = !1, this.cameraToX = void 0, this.cameraToY = void 0, this.cameraFromX = void 0, void(this.cameraFromY = void 0)) : (this.cameraFromX += e, this.cameraFromY += t, void this.centerCamera(this.cameraFromX, this.cameraFromY))
+                }
+                switch (this.panningY) {
+                    case 1:
+                        this.cameraOffY < this.tileRowOffset * this.Xtiles / 2 - this.originY && (this.cameraOffY += 10);
+                        break;
+                    case -1:
+                        this.cameraOffY > (this.originY - this.tileRowOffset * this.Ytiles) / 2 - this.canvas.offsetTop && (this.cameraOffY -= 10)
+                }
+                switch (this.panningX) {
+                    case 1:
+                        this.cameraOffX > this.originX && (this.cameraOffX -= 10);
+                        break;
+                    case -1:
+                        this.cameraOffX < 30 - this.originX && (this.cameraOffX += 10)
+                }
+            },
+            panCamera: function(e, t) {
+                t - this.canvas.offsetTop < this.canvas.height / 5 ? this.panningY = 1 : t - this.canvas.offsetTop > 4 * this.canvas.height / 5 ? this.panningY = -1 : this.panningY = void 0, e > 4 * this.canvas.width / 5 ? this.panningX = 1 : e < this.canvas.width / 5 ? this.panningX = -1 : this.panningX = void 0
+            },
+            processAttack: function(e) {
+                let {
+                    attacking: t,
+                    currentFrame: i,
+                    animation: s,
+                    sheet: a
+                } = this.friends[e], {
+                    frames: l
+                } = this.sprites[a];
+                i == Math.floor(i + .3 * t) ? this.friends[e].attacking++ : i < l[s].to - l[s].from ? (this.friends[e].attacking = 0, this.friends[e].currentFrame++) : (this.friends[e].attacking = -1, this.friends[e].currentFrame = 0)
+            },
+            processMovement: function(e) {
+                let {
+                    positionX: t,
+                    positionY: i,
+                    entering: s,
+                    animation: a,
+                    speed: l,
+                    movingTo: o,
+                    currentFrame: n,
+                    sheet: h
+                } = this.friends[e], {
+                    frames: r
+                } = this.sprites[h], c = 0, m = 0;
+                s ? this.friends[e].walking > 0 ? this.friends[e].walking-- : this.friends[e].entering = !1 : this.friends[e].walking++;
+                let d = 0,
+                    f = 0;
+                switch (c = .1 * this.friends[e].walking * l, m = .1 * this.friends[e].walking * l, a) {
+                    case "walkingN":
+                        f = 1;
+                        break;
+                    case "walkingNW":
+                        d = 1, f = 1;
+                        break;
+                    case "walkingW":
+                        d = 1;
+                        break;
+                    case "walkingSW":
+                        d = 1, f = -1;
+                        break;
+                    case "walkingS":
+                        f = -1;
+                        break;
+                    case "walkingSE":
+                        d = -1, f = -1;
+                        break;
+                    case "walkingE":
+                        d = -1;
+                        break;
+                    case "walkingNE":
+                        d = -1, f = 1
+                }
+                if (c *= d, m *= f, this.friends[e].entering && (c = -c, m = -m), s || t != o.x || i != o.y) {
+                    {
+                        let a, l;
+                        a = t > o.x ? Math.round(t + c - .1) : Math.round(t + c), l = i > o.y ? Math.round(i + m - .1) : Math.round(i + m), a == t && l == i || s || (this.collisionMatrix[t][i] = void 0, this.friends[e].entering = !0, c = -c, m = -m, this.friends[e].positionX = a, this.friends[e].positionY = l, this.collisionMatrix[a][l] = e)
+                    }
+                    return n < r[a].to - r[a].from ? this.friends[e].currentFrame++ : this.friends[e].currentFrame = 0, {
+                        mOffX: c,
+                        mOffY: m
+                    }
+                }
+                this.collisionMatrix[o.x][o.y] = e, this.friends[e].positionX = o.x, this.friends[e].positionY = o.y, this.friends[e].entering = !1;
+                for (let e = 0; e < this.spatialTArray.length; e++)
+                    if (this.spatialTArray[e].x == o.x && this.spatialTArray[e].y == o.y) {
+                        this.parseActions(this.spatialTArray[e].actions);
+                        break
+                    }
+                if (0 == this.friends[e].walkingRoute.length) this.friends[e].currentFrame = 0, this.friends[e].walking = -1, this.friends[e].movingTo.x = -1, this.friends[e].movingTo.y = -1;
+                else {
+                    let t = this.friends[e].walkingRoute.shift();
+                    this.friends[e].move(t.x, t.y)
+                }
+            },
+            handleClick: function() {
+                if (-1 === this.selectedChar) {
+                    let e = !1;
+                    for (let t = 0; t < this.enemies.length; t++) {
+                        let {
+                            positionX: i,
+                            positionY: s
+                        } = this.enemies[t];
+                        if (i == this.selectedTileX && s == this.selectedTileY)
+                            if (this.willHack) console.log(this.visited), 1 === this.visited[this.selectedTileX][this.selectedTileY] ? (Terminal.selected.attack(this.selectedTileX, this.selectedTileY, !0), this.highlightQueue = [], this.willHack = !1) : Terminal.invalidTarget();
+                            else {
+                                if (!this.willAttack) {
+                                    this.highlightQueue = [], this.willAttack = this.willHack = this.willMove = !1, this.enemies[t].walkingRoute = void 0, Terminal.selectEnemy(this.enemies[t], t), e = !0;
+                                    break
+                                }
+                                1 === this.visited[this.selectedTileX][this.selectedTileY] ? (Terminal.selected.attack(this.selectedTileX, this.selectedTileY), this.highlightQueue = [], this.willAttack = !1) : Terminal.invalidTarget()
+                            }
+                    }
+                    for (let t = 0; t < this.friends.length; t++) {
+                        let {
+                            positionX: i,
+                            positionY: s
+                        } = this.friends[t];
+                        if (i == this.selectedTileX && s == this.selectedTileY) {
+                            this.highlightQueue = [], this.willAttack = this.willHack = this.willMove = !1, this.friends[t].walkingRoute = void 0, Terminal.select(this.friends[t], t), e = !0;
+                            break
+                        }
+                    }
+                    Terminal.selected && !e ? (this.willMove || this.willAttack || this.willHack ? console.log("click a opcion del menu") : console.log("click a nada con algo seleccionado"), this.selectedChar = -1) : e || console.log("click a algo fuera del canvas sin seleccion")
+                } else if (!this.mouseOut && this.selectedTileX != this.friends[this.selectedChar].positionX | this.selectedTileY != this.friends[this.selectedChar].positionY && !IsometricMap.forbiddenTiles.includes(IsometricMap.map[this.selectedTileX][this.selectedTileY]) && this.selectedTileX <= this.Xtiles && this.selectedTileX >= 0 && this.selectedTileY >= 0 && this.selectedTileY <= this.Ytiles && null != this.visited[this.selectedTileX][this.selectedTileY])
+                    if (1 === this.visited[this.selectedTileX][this.selectedTileY]) {
+                        let e = this.friends[this.selectedChar].walkingRoute[1];
+                        this.friends[this.selectedChar].walkingRoute.shift(), this.friends[this.selectedChar].move(e.x, e.y), this.selectedChar = -1, Terminal.move(this.selectedTileX, this.selectedTileY), this.highlightQueue = [], this.willMove = !1
+                    } else Terminal.invalidRoute()
+            },
+            handleMouseMove: function(e) {
+                var t = {
+                    pageX: e.pageX - this.cameraOffX,
+                    pageY: e.pageY - this.cameraOffY
+                };
+                if (this.panCamera(e.pageX, e.pageY), t.pageX = t.pageX - this.tileColumnOffset / 2 - this.originX - this.canvas.offsetLeft, t.pageY = t.pageY - this.tileRowOffset / 2 - this.originY - this.canvas.offsetTop, tileX = Math.round(t.pageX / this.tileColumnOffset - t.pageY / this.tileRowOffset), tileY = Math.round(t.pageX / this.tileColumnOffset + t.pageY / this.tileRowOffset), 0 <= tileX && tileX < this.Xtiles && 0 <= tileY && tileY < this.Ytiles && (this.selectedTileX = tileX, this.selectedTileY = tileY), -1 != this.selectedChar) {
+                    if (this.selectedTileX == this.friends[this.selectedChar].positionX && this.selectedTileY == this.friends[this.selectedChar].positionY) return void(this.friends[this.selectedChar].walkingRoute = void 0);
+                    this.pathfind(this.selectedChar, this.friends[this.selectedChar].positionX, this.friends[this.selectedChar].positionY, this.selectedTileX, this.selectedTileY)
+                }
+            },
+            pathfind: function(e, t, i, s, a) {
+                if (IsometricMap.limitedTiles.hasOwnProperty(IsometricMap.map[s][a]) && "all" == IsometricMap.limitedTiles[IsometricMap.map[s][a]]) return void(this.friends[e].walkingRoute = void 0);
+                let l = new Array,
+                    o = new Array,
+                    n = new Array(this.Xtiles);
+                for (let e = 0; e < this.Xtiles; e++) {
+                    n[e] = new Array(this.Ytiles);
+                    for (let t = 0; t < this.Ytiles; t++) n[e][t] = {
+                        cameFrom: {
+                            x: void 0,
+                            y: void 0
+                        },
+                        fScore: Number.POSITIVE_INFINITY,
+                        gScore: Number.POSITIVE_INFINITY
+                    }
+                }
+                for (l.push({
+                        x: t,
+                        y: i
+                    }), n[t][i].gScore = 0, n[t][i].fScore = Math.sqrt(Math.pow(s - t, 2) + Math.pow(a - s, 2)); l.length > 0;) {
+                    let h = -1,
+                        r = Number.POSITIVE_INFINITY;
+                    for (let e = 0; e < l.length; e++) n[l[e].x][l[e].y].fScore < r && (r = n[l[e].x][l[e].y].fScore, h = e);
+                    if (l[h].x == s && l[h].y == a) {
+                        this.friends[e].walkingRoute = new Array;
+                        let l = s,
+                            o = a;
+                        for (;;) {
+                            if (this.friends[e].walkingRoute.unshift({
+                                    x: l,
+                                    y: o
+                                }), l == t && o == i) return; {
+                                let e = l,
+                                    t = o;
+                                l = n[e][t].cameFrom.x, o = n[e][t].cameFrom.y
+                            }
+                        }
+                    }
+                    temp = l[h], o.push(l[h]), l.splice(h, 1);
+                    let c = new Array,
+                        m = IsometricMap.map[temp.x][temp.y],
+                        d = IsometricMap.limitedTiles.hasOwnProperty(m);
+                    if (temp.y < this.Ytiles - 1) {
+                        let e = IsometricMap.map[temp.x][temp.y + 1],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("North") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("South") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), null != this.collisionMatrix[temp.x][temp.y + 1] && (i = !0), i || c.push({
+                            x: temp.x,
+                            y: temp.y + 1
+                        })
+                    }
+                    if (temp.x < this.Xtiles - 1 && temp.y < this.Ytiles - 1) {
+                        let e = IsometricMap.map[temp.x + 1][temp.y + 1],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("Northwest") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("Southeast") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x + 1][temp.y + 1] || (i = !0), i || c.push({
+                            x: temp.x + 1,
+                            y: temp.y + 1
+                        })
+                    }
+                    if (temp.x < this.Xtiles - 1) {
+                        let e = IsometricMap.map[temp.x + 1][temp.y],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("West") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("East") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x + 1][temp.y] || (i = !0), i || c.push({
+                            x: temp.x + 1,
+                            y: temp.y
+                        })
+                    }
+                    if (temp.x < this.Xtiles - 1 && temp.y > 0) {
+                        let e = IsometricMap.map[temp.x + 1][temp.y - 1],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("Southwest") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("Northeast") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x + 1][temp.y - 1] || (i = !0), i || c.push({
+                            x: temp.x + 1,
+                            y: temp.y - 1
+                        })
+                    }
+                    if (temp.y > 0) {
+                        let e = IsometricMap.map[temp.x][temp.y - 1],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("South") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("North") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x][temp.y - 1] || (i = !0), i || c.push({
+                            x: temp.x,
+                            y: temp.y - 1
+                        })
+                    }
+                    if (temp.x > 0 && temp.y > 0) {
+                        let e = IsometricMap.map[temp.x - 1][temp.y - 1],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("Southeast") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("Northwest") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x - 1][temp.y - 1] || (i = !0), i || c.push({
+                            x: temp.x - 1,
+                            y: temp.y - 1
+                        })
+                    }
+                    if (temp.x > 0) {
+                        let e = IsometricMap.map[temp.x - 1][temp.y],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("East") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("West") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x - 1][temp.y] || (i = !0), i || c.push({
+                            x: temp.x - 1,
+                            y: temp.y
+                        })
+                    }
+                    if (temp.x > 0 && temp.y < this.Ytiles - 1) {
+                        let e = IsometricMap.map[temp.x - 1][temp.y + 1],
+                            t = IsometricMap.limitedTiles.hasOwnProperty(e),
+                            i = !1;
+                        d && IsometricMap.limitedTiles[m].includes("Northeast") && (i = !0), !i && t && (IsometricMap.limitedTiles[e].includes("Southwest") || IsometricMap.limitedTiles[e].includes("all")) && (i = !0), i || null == this.collisionMatrix[temp.x - 1][temp.y + 1] || (i = !0), i || c.push({
+                            x: temp.x - 1,
+                            y: temp.y + 1
+                        })
+                    }
+                    for (let e = 0; e < c.length; e++) {
+                        let t = !1;
+                        for (let i = 0; i < o.length; i++)
+                            if (o[i].x == c[e].x && o[i].y == c[e].y) {
+                                t = !0;
+                                break
+                            }
+                        if (t) continue;
+                        let i = 0;
+                        if (null != n[temp.x][temp.y].cameFrom.x && null != n[temp.x][temp.y].cameFrom.y) {
+                            let t = temp.x - n[temp.x][temp.y].cameFrom.x,
+                                s = temp.y - n[temp.x][temp.y].cameFrom.y,
+                                a = c[e].x - temp.x,
+                                l = c[e].y - temp.y;
+                            i = t == a && s == l ? n[temp.x][temp.y].gScore + 1 : n[temp.x][temp.y].gScore + 1.2
+                        } else i = n[temp.x][temp.y].gScore + 1;
+                        t = !1;
+                        for (let i = 0; i < l.length; i++)
+                            if (l[i].x == c[e].x && l[i].y == c[e].y) {
+                                t = !0;
+                                break
+                            }
+                        if (t) {
+                            if (i >= n[c[e].x][c[e].y].gScore) continue
+                        } else l.push(c[e]);
+                        n[c[e].x][c[e].y].cameFrom.x = temp.x, n[c[e].x][c[e].y].cameFrom.y = temp.y, n[c[e].x][c[e].y].gScore = i;
+                        let h = Math.sqrt(Math.pow(s - c[e].x, 2) + Math.pow(a - c[e].y, 2));
+                        n[c[e].x][c[e].y].fScore = i + h
+                    }
+                }
+            },
+            updateCanvasSize: function() {
+                var e = window.innerWidth,
+                    t = window.innerHeight;
+                this.context.canvas.width = .5333 * e, this.context.canvas.height = .7111 * t, this.originX = e / 2 - this.Xtiles * this.tileColumnOffset / 2, this.originY = t / 2
+            },
+            drawEnemies: function(e) {
+                this.highlightQueue = [], this.willAttack = this.willHack = this.willMove = !1, "a" === e ? this.willAttack = !0 : "h" === e && (this.willHack = !0), this.enemiesHighlighted = !0;
+                for (var t = 0; t < this.friends.length; t++) Terminal.selected.positionX != this.friends[t].positionX && Terminal.selected.positionY != this.friends[t].positionY && this.timedTArray.push(new timedTrigger(0, `highlight(${this.friends[t].positionX},${this.friends[t].positionY})`))
+            },
+            drawRadius: function() {
+                this.highlightQueue = [], this.willAttack = this.willHack = this.willMove = !1, this.enemiesHighlighted = !0, this.visited = new Array, this.willMove = !0, this.selectedChar = Terminal.selectedIndex, Terminal.selected.walkingRoute = void 0;
+                const e = (t, i, s) => {
+                    if (t > 0)
+                        for (let a = -1; a < 2; a++) {
+                            let l = i + a;
+                            void 0 === this.visited[l] && (this.visited[l] = new Array);
+                            for (let i = -1; i < 2; i++) {
+                                let a = s + i;
+                                l >= 0 && a >= 0 && ("all" != IsometricMap.limitedTiles[IsometricMap.map[l][a]] || void 0 !== this.collisionMatrix[l][a] ? (e(t - 1, l, a), null == this.visited[l][a] && (this.visited[l][a] = 1, this.timedTArray.push(new timedTrigger(0, `highlight(${l},${a})`)))) : this.visited[l][a] = 0)
+                            }
+                        }
+                };
+                e(Terminal.selected.stats.speed, Terminal.selected.positionX, Terminal.selected.positionY)
+            },
+            drawEnemiesInRadius: function(e) {
+                this.highlightQueue = [], this.willAttack = this.willHack = this.willMove = !1, this.enemiesHighlighted = !0, this.visited = new Array, "a" === e ? this.willAttack = !0 : "h" === e && (this.willHack = !0);
+                const t = (e, i, s) => {
+                    if (e > 0)
+                        for (let a = -1; a < 2; a++) {
+                            let l = i + a;
+                            void 0 === this.visited[l] && (this.visited[l] = new Array);
+                            for (let i = -1; i < 2; i++) {
+                                let a = s + i;
+                                t(e - 1, l, a), null == this.visited[l][a] && this.collisionMatrix[l][a] && this.collisionMatrix[l][a] < 0 && (Terminal.selected.positionX == l && Terminal.selected.positionY == a || (this.visited[l][a] = 1, this.timedTArray.push(new timedTrigger(0, `highlight(${l},${a})`))))
+                            }
+                        }
+                };
+                t(Terminal.selected.stats.reach, Terminal.selected.positionX, Terminal.selected.positionY)
+            },
+            redrawTiles: function() {
+                for (let e = 0; e < this.friends.length; e++) this.friends[e].stats.hp.current <= 0 && this.deleteCharacter(e);
+                for (let e = 0; e < this.enemies.length; e++) this.enemies[e].stats.hp.current <= 0 && this.deleteEnemy(e);
+                this.context.canvas.width = this.context.canvas.width, this.context.imageSmoothingEnabled = !0;
+                for (var e = this.Xtiles - 1; e >= 0; e--)
+                    for (var t = 0; t < this.Ytiles; t++) this.drawTile(e, t);
+                if (-1 != this.selectedChar ? null == this.friends[this.selectedChar].walkingRoute ? this.drawDiamond(this.selectedTileX, this.selectedTileY, "red") : this.friends[this.selectedChar].positionX != this.selectedTileX && this.friends[this.selectedChar].positionY != this.selectedTileY && (this.drawDiamond(this.selectedTileX, this.selectedTileY, "yellow"), this.displayRoute()) : this.drawDiamond(this.selectedTileX, this.selectedTileY, "yellow"), this.glowQueue.length > 0 && (null == this.glowStep && (this.glowStep = Date.now()), Date.now() > this.glowStep)) {
+                    this.glowStep = Date.now() + 100;
+                    for (let e = 0; e < this.glowQueue.length; e++) {
+                        let {
+                            x: t,
+                            y: i
+                        } = this.glowQueue[e];
+                        this.drawDiamond(t, i, "blue")
+                    }
+                }
+                if (this.highlightQueue.length > 0 && (null == this.highlightStep && (this.highlightStep = Date.now()), Date.now() > this.highlightStep)) {
+                    this.highlightStep = Date.now() + 100;
+                    for (let e = 0; e < this.highlightQueue.length; e++) {
+                        let {
+                            x: t,
+                            y: i
+                        } = this.highlightQueue[e];
+                        this.drawDiamond(t, i, "purple")
+                    }
+                }
+                if (this.itemQueue.length > 0)
+                    for (let e = 0; e < this.itemQueue.length; e++) this.drawItem(this.itemQueue[e].positionX, this.itemQueue[e].positionY, this.itemQueue[e].type);
+                for (let e = 0; e < this.friends.length; e++) {
+                    let {
+                        sheet: t,
+                        walking: i,
+                        speed: s,
+                        movingTo: a,
+                        currentFrame: l,
+                        animation: o,
+                        positionX: n,
+                        positionY: h,
+                        entering: r,
+                        attacking: c
+                    } = this.friends[e], {
+                        frames: m,
+                        sheet: d,
+                        sheetX: f,
+                        sheetY: p
+                    } = this.sprites[t], g = 0, u = 0;
+                    if (-1 != i) {
+                        let t = this.processMovement(e);
+                        t && (g = t.mOffX, u = t.mOffY)
+                    } else -1 != c && this.processAttack(e);
+                    let w = d.width / f,
+                        y = d.height / p;
+                    offsetX = (this.friends[e].positionX + g) * this.tileColumnOffset / 2 + (this.friends[e].positionY + u) * this.tileColumnOffset / 2 + this.originX - w / 2 + this.tileRowOffset + this.cameraOffX, offsetY = (this.friends[e].positionY + u) * this.tileRowOffset / 2 - (this.friends[e].positionX + g) * this.tileRowOffset / 2 + this.originY - y / 2 + this.cameraOffY;
+                    let v = (l + m[o].from) % f * w,
+                        T = Math.floor((l + m[o].from) / f) * y; - 1 != i && this.drawDiamond(this.friends[e].positionX, this.friends[e].positionY, "green"), this.context.drawImage(d, v, T, w, y, offsetX, offsetY, 1.5 * w, 1.5 * y)
+                }
+                for (let e = 0; e < this.enemies.length; e++) {
+                    let {
+                        sheet: t,
+                        walking: i,
+                        speed: s,
+                        movingTo: a,
+                        currentFrame: l,
+                        animation: o,
+                        positionX: n,
+                        positionY: h,
+                        entering: r,
+                        attacking: c
+                    } = this.enemies[e], {
+                        frames: m,
+                        sheet: d,
+                        sheetX: f,
+                        sheetY: p
+                    } = this.sprites[t], g = 0, u = 0;
+                    if (-1 != i) {
+                        let t = this.processMovement(e);
+                        t && (g = t.mOffX, u = t.mOffY)
+                    } else -1 != c && this.processAttack(e);
+                    let w = d.width / f,
+                        y = d.height / p;
+                    offsetX = (this.enemies[e].positionX + g) * this.tileColumnOffset / 2 + (this.enemies[e].positionY + u) * this.tileColumnOffset / 2 + this.originX - w / 2 + this.tileRowOffset + this.cameraOffX, offsetY = (this.enemies[e].positionY + u) * this.tileRowOffset / 2 - (this.enemies[e].positionX + g) * this.tileRowOffset / 2 + this.originY - y / 2 + this.cameraOffY;
+                    let v = (l + m[o].from) % f * w,
+                        T = Math.floor((l + m[o].from) / f) * y; - 1 != i && this.drawDiamond(this.enemies[e].positionX, this.enemies[e].positionY, "green"), this.context.drawImage(d, v, T, w, y, offsetX, offsetY, 1.5 * w, 1.5 * y)
+                }
+                if (this.showCoordinates && this.isCursorOnMap()) {
+                    this.context.fillStyle = "yellow";
+                    var i = IsometricMap.map[this.selectedTileX][this.selectedTileY];
+                    this.context.font = "14pt Arial", this.context.fillText(IsometricMap.tiles[i].replace("/assets/tiles/", ""), 20, 30)
+                }
+            },
+            isCursorOnMap: function() {
+                return this.selectedTileX >= 0 && this.selectedTileX < this.Xtiles && this.selectedTileY >= 0 && this.selectedTileY < this.Ytiles
+            },
+            drawTile: function(e, t) {
+                var i = e * this.tileColumnOffset / 2 + t * this.tileColumnOffset / 2 + this.originX + this.cameraOffX,
+                    s = t * this.tileRowOffset / 2 - e * this.tileRowOffset / 2 + this.originY + this.cameraOffY,
+                    a = IsometricMap.map[e][t];
+                50 === a ? this.context.drawImage(this.tileImages[a], i, s - 135) : this.context.drawImage(this.tileImages[a], i, s)
+            },
+            drawDiamond: function(e, t, i) {
+                var s = e * this.tileColumnOffset / 2 + t * this.tileColumnOffset / 2 + this.originX + this.cameraOffX,
+                    a = t * this.tileRowOffset / 2 - e * this.tileRowOffset / 2 + this.originY + this.cameraOffY;
+                this.drawLine(s, a + this.tileRowOffset / 2, s + this.tileColumnOffset / 2, a, i), this.drawLine(s + this.tileColumnOffset / 2, a, s + this.tileColumnOffset, a + this.tileRowOffset / 2, i), this.drawLine(s + this.tileColumnOffset, a + this.tileRowOffset / 2, s + this.tileColumnOffset / 2, a + this.tileRowOffset, i), this.drawLine(s + this.tileColumnOffset / 2, a + this.tileRowOffset, s, a + this.tileRowOffset / 2, i)
+            },
+            drawItem: function(e, t, i) {
+                var s = e * this.tileColumnOffset / 2 + t * this.tileColumnOffset / 2 + this.originX + this.cameraOffX,
+                    a = t * this.tileRowOffset / 2 - e * this.tileRowOffset / 2 + this.originY + this.cameraOffY;
+                "rubble" === i ? this.drawBlackCircle(s + this.tileColumnOffset / 2, a + this.tileRowOffset, s, a + this.tileRowOffset / 2) : "hp" === i ? this.drawRedCircle(s + this.tileColumnOffset / 2, a + this.tileRowOffset, s, a + this.tileRowOffset / 2) : this.drawBlueCircle(s + this.tileColumnOffset / 2, a + this.tileRowOffset, s, a + this.tileRowOffset / 2)
+            },
+            drawLine: function(e, t, i, s, a) {
+                a = void 0 !== a ? a : "white", this.context.strokeStyle = a, this.context.beginPath(), this.context.lineWidth = 1, this.context.moveTo(e, t), this.context.lineTo(i, s), this.context.stroke()
+            },
+            drawRedCircle: function(e, t, i, s) {
+                this.context.beginPath(), this.context.arc(e, t - 30, 15, 0, 2 * Math.PI);
+                let a = this.context.createRadialGradient(e, t - 30, 15, i, s, 30);
+                a.addColorStop(0, "rgba(200, 33, 33, 0.78)"), a.addColorStop(1, "rgba(200, 33, 33, 0.01)"), this.context.fillStyle = a, this.context.fill()
+            },
+            drawBlackCircle: function(e, t, i, s) {
+                this.context.beginPath(), this.context.arc(e, t - 30, 15, 0, 2 * Math.PI);
+                let a = this.context.createRadialGradient(e, t - 30, 15, i, s, 30);
+                a.addColorStop(0, "black"), a.addColorStop(1, "white"), this.context.fillStyle = a, this.context.fill()
+            },
+            drawBlueCircle: function(e, t, i, s) {
+                this.context.beginPath(), this.context.arc(e, t - 30, 15, 0, 2 * Math.PI);
+                let a = this.context.createRadialGradient(e, t - 30, 15, i, s, 30);
+                a.addColorStop(0, "blue"), a.addColorStop(1, "rgba(33, 33, 187, 0.1)"), this.context.fillStyle = a, this.context.fill()
+            },
+            deleteCharacter: function(e) {
+                const {
+                    positionX: t,
+                    positionY: i
+                } = Isometric.friends[e];
+                this.collisionMatrix[t][i] = void 0, this.friends.splice(e, 1)
+            },
+            deleteEnemy: function(e) {
+                const {
+                    positionX: t,
+                    positionY: i
+                } = Isometric.enemies[e];
+                this.collisionMatrix[t][i] = void 0, this.enemies.splice(e, 1)
+            }
+        };
+        document.addEventListener("DOMContentLoaded", function() {
+            var e = document.createElement("canvas");
+            e.setAttribute("id", "isocanvas"), document.body.appendChild(e), Isometric.load()
+        });
+</script>
+<script>
+var Terminal = {
+            selected: void 0,
+            selectedIndex: void 0,
+            htmlElem: void 0,
+            faces: void 0,
+            load: function() {
+                this.htmlElem = document.getElementById("terminal")
+            },
+            selectEnemy: function(t, e) {
+                this.selected = t, this.selectedIndex = e;
+                const {
+                    positionX: n,
+                    positionY: i,
+                    stats: {
+                        str: d,
+                        name: s,
+                        hp: c,
+                        energy: a,
+                        weight: o
+                    }
+                } = t;
+                this.htmlElem.innerHTML = `\n<div class="charBox enemy">\n<div class="row header">\n<canvas id="imgChar"></canvas>\n<h3>${s}</h2>\n</div>\n<div class="row content">\n<div id="stats">\n<div class="barBox">\n<div class="bar"id="hp"></div>\n<p class="data">\n HEALTH:${c.current}/${c.total}\n</p>\n</div>\n<div class="barBox">\n<div class="bar"id="energy"></div>\n<p class="data">\n ENERGY:${a.current}/${a.total}\n</p>\n</div>\n<div class="barBox">\n<div class="bar"id="wg"></div>\n<p class="data">\n WEIGHT:${o.current}/${o.total}\n</p>\n</div>\n</div>\n\n<div class="actionBox">\n<li class="actionBtn">\n DMG:5-${5+d}\n</li>\n</div>\n</div>\n<div class="row footer">\n<p id="textbox">\n>>What will ${s} do next?;\n</p>\n</div>\n</div>\n`, document.getElementById("hp").style.width = `${16*c.current/c.total}vw`, document.getElementById("energy").style.width = `${16*a.current/a.total}vw`, document.getElementById("wg").style.width = `${16*o.current/o.total}vw`
+            },
+            select: function(t, e) {
+                this.selected = t, this.selectedIndex = e;
+                const {
+                    positionX: n,
+                    positionY: i,
+                    stats: {
+                        name: d,
+                        hp: s,
+                        energy: c,
+                        weight: a
+                    }
+                } = t;
+                this.htmlElem.innerHTML = `\n<div class="charBox">\n<div class="row header">\n<canvas id="imgChar"></canvas>\n<h3>${d}</h2>\n</div>\n<div class="row content">\n<div id="stats">\n<div class="barBox">\n<div class="bar"id="hp"></div>\n<p class="data">\n HEALTH:${s.current}/${s.total}\n</p>\n</div>\n<div class="barBox">\n<div class="bar"id="energy"></div>\n<p class="data">\n ENERGY:${c.current}/${c.total}\n</p>\n</div>\n<div class="barBox">\n<div class="bar"id="wg"></div>\n<p class="data">\n WEIGHT:${a.current}/${a.total}\n</p>\n</div>\n</div>\n\n<div class="actionBox">\n<li class="actionBtn"id="attackBtn">\n Attack\n</li>\n<li class="actionBtn"id="hackBtn">\n Hack\n</li>\n<li class="actionBtn"id="runBtn">\n Move\n</li>\n<li class="actionBtn"id="itemBtn">\n Item\n</li>\n</div>\n</div>\n<div class="row footer">\n<p id="textbox">\n>>What will ${d}do next?;\n</p>\n</div>\n</div>\n`;
+                document.getElementById("hp").style.width = `${16*s.current/s.total}vw`, document.getElementById("energy").style.width = `${16*c.current/c.total}vw`, document.getElementById("wg").style.width = `${16*a.current/a.total}vw`, document.getElementById("attackBtn").addEventListener("click", () => {
+                    document.getElementById("textbox").innerHTML = `\n>>Who will ${d} ATTACK?;\n`, Isometric.drawEnemiesInRadius("a")
+                }), document.getElementById("hackBtn").addEventListener("click", () => {
+                    document.getElementById("textbox").innerHTML = `\n>>Who will ${d} HACK?;\n`, Isometric.drawEnemiesInRadius("h")
+                }), document.getElementById("runBtn").addEventListener("click", () => {
+                    document.getElementById("textbox").innerHTML = "\n                    >> RUN;\n                ", Isometric.drawRadius()
+                }), document.getElementById("itemBtn").addEventListener("click", () => {
+                    this.inventory(this.selected)
+                })
+            },
+            drawSelected: function() {},
+            attack: function(t, e, n) {
+                this.autoSelect(), document.getElementById("textbox").innerHTML = `\n>>${this.selected.stats.name} does ${e}hp \n ${t} responds ${n}hp.;\n`
+            },
+            kills: function(t, e) {
+                this.autoSelect(), document.getElementById("textbox").innerHTML = `\n>>${t} has KILLED ${e};\n`
+            },
+            doubleKill: function(t, e) {
+                this.autoSelect(), this.htmlElem.innerHTML = `\n<div class='charBox'>\n>>${t} and ${e} KILLED eachother;\n</div>x\n`
+            },
+            hack: function(t, e) {
+                this.autoSelect(), document.getElementById("textbox").innerHTML = `\n>>Attempt hacking ${t};\n`, e ? setTimeout(function() {
+                    document.getElementById("textbox").innerHTML = `\n>>Attempt hacking ${t}...SUCCESS;\n`
+                }, 1800) : setTimeout(function() {
+                    document.getElementById("textbox").innerHTML = `\n>>Attempt hacking ${t}...FAILURE;\n`
+                }, 1800)
+            },
+            notEnoughEnergy: function() {
+                document.getElementById("textbox").innerHTML = "\n            >> Not enough energy for hacking;\n        "
+            },
+            inventory: function(t) {
+                this.htmlElem.innerHTML = `\n<div class="charBox items">\n<div id="backBtn"class="actionBtn">\n./Back\n</div>\n<ul>\n ${t.inventory.map(t=>'<li class="actionBtn '+t.type+'" > -'+t.name+"</li>")}\n</ul>\n</div>\n`, document.getElementById("backBtn").style.borderBottom = "1px solid greenyellow", document.getElementById("backBtn").addEventListener("click", () => {
+                    this.autoSelect()
+                });
+                let e = document.getElementsByClassName("hp");
+                for (let t = 0; t < e.length; t++) e[t].addEventListener("click", () => {
+                    const t = (t => t.stats.hp.current >= t.stats.hp.total ? `${name}already have maximum health` : t.useItem("hp"))(this.selected);
+                    this.autoSelect(), document.getElementById("textbox").innerHTML = `\n>>${t};\n`
+                });
+                e = document.getElementsByClassName("energy");
+                for (let t = 0; t < e.length; t++) e[t].addEventListener("click", () => {
+                    const t = (t => t.stats.energy.current >= t.stats.energy.total ? `${name}already have maximum energy` : t.useItem("energy"))(this.selected);
+                    this.autoSelect(), document.getElementById("textbox").innerHTML = `\n>>${t};\n`
+                })
+            },
+            move: function(t, e) {
+                document.getElementById("textbox").innerHTML = `\n>>${this.selected.stats.name} moved to(${t},${e});\n`
+            },
+            pickupItem: function(t, e) {
+                this.autoSelect(), document.getElementById("textbox").innerHTML = `\n>>${t}picked up a ${e};\n`
+            },
+            cantPickupItem: function(t) {
+                document.getElementById("textbox").innerHTML = `\n>>${t}inventory is FULL;\n`
+            },
+            autoSelect: function() {
+                this.select(this.selected, this.selectedIndex)
+            },
+            clean: function() {
+                this.htmlElem.innerHTML = ""
+            },
+            updateIndex: function() {
+                if (this.selected) {
+                    for (let t = 0; t < Isometric.friends.length; t++)
+                        if (this.selected.positionX == Isometric.friends[t].positionX && this.selected.positionY == Isometric.friends[t].positionY) {
+                            this.selectedIndex = t;
+                            break
+                        }
+                } else this.selectedIndex = void 0
+            },
+            invalidRoute: function() {
+                document.getElementById("textbox").innerHTML = "\n        >> SELECTION OUT OF RANGE;\n        "
+            },
+            invalidTarget: function() {
+                document.getElementById("textbox").innerHTML = "\n        >> TARGET TOO FAR;\n        "
+            },
+            example: function() {}
+        };
+        document.addEventListener("DOMContentLoaded", function() {
+            Terminal.load()
+        });
+</script>
+<script>
+var RefData = {
+            used: [],
+            Items: {
+                info: {
+                    hp: {
+                        name: "Bio Reconstitutor",
+                        description: "Heals the selected character for up to 50hp",
+                        type: "hp",
+                        weight: 5
+                    },
+                    energy: {
+                        name: "Energy Pack",
+                        description: "Restores selected character Energy for up to 30 points",
+                        type: "energy",
+                        weight: 5
+                    },
+                    rubble: {
+                        name: "Rubble",
+                        description: "Does nothing by itselft. Sold in large cuantities does a decent job.",
+                        type: "rubble",
+                        weight: 1
+                    }
+                },
+                locations: [{
+                    positionX: 24,
+                    positionY: 11,
+                    type: "hp"
+                }, {
+                    positionX: 23,
+                    positionY: 11,
+                    type: "energy"
+                }, {
+                    positionX: 23,
+                    positionY: 12,
+                    type: "hp"
+                }, {
+                    positionX: 4,
+                    positionY: 12,
+                    type: "rubble"
+                }, {
+                    positionX: 0,
+                    positionY: 11,
+                    type: "energy"
+                }, {
+                    positionX: 7,
+                    positionY: 34,
+                    type: "hp"
+                }, {
+                    positionX: 1,
+                    positionY: 38,
+                    type: "energy"
+                }, {
+                    positionX: 0,
+                    positionY: 49,
+                    type: "energy"
+                }, {
+                    positionX: 19,
+                    positionY: 43,
+                    type: "hp"
+                }, {
+                    positionX: 9,
+                    positionY: 32,
+                    type: "energy"
+                }, {
+                    positionX: 26,
+                    positionY: 20,
+                    type: "hp"
+                }, {
+                    positionX: 26,
+                    positionY: 21,
+                    type: "energy"
+                }, {
+                    positionX: 23,
+                    positionY: 35,
+                    type: "hp"
+                }, {
+                    positionX: 23,
+                    positionY: 36,
+                    type: "energy"
+                }, {
+                    positionX: 48,
+                    positionY: 35,
+                    type: "hp"
+                }, {
+                    positionX: 49,
+                    positionY: 9,
+                    type: "energy"
+                }, {
+                    positionX: 44,
+                    positionY: 0,
+                    type: "hp"
+                }]
+            },
+            characters: [{
+                name: "Cryos",
+                speed: 3,
+                str: 3,
+                reach: 6,
+                hp: {
+                    current: 99,
+                    total: 99
+                },
+                energy: {
+                    current: 80,
+                    total: 80
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Phaxys",
+                speed: 6,
+                str: 4,
+                reach: 2,
+                hp: {
+                    current: 99,
+                    total: 99
+                },
+                energy: {
+                    current: 60,
+                    total: 60
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Leotis",
+                speed: 6,
+                str: 1,
+                reach: 10,
+                hp: {
+                    current: 80,
+                    total: 80
+                },
+                energy: {
+                    current: 60,
+                    total: 60
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Amfurik",
+                speed: 4,
+                str: 8,
+                reach: 1,
+                hp: {
+                    current: 99,
+                    total: 99
+                },
+                energy: {
+                    current: 30,
+                    total: 30
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Orrif",
+                speed: 2,
+                str: 4,
+                reach: 12,
+                hp: {
+                    current: 99,
+                    total: 99
+                },
+                energy: {
+                    current: 80,
+                    total: 80
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Kartay",
+                speed: 4,
+                str: 10,
+                reach: 1,
+                hp: {
+                    current: 80,
+                    total: 80
+                },
+                energy: {
+                    current: 60,
+                    total: 60
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Onter",
+                speed: 4,
+                str: 10,
+                reach: 3,
+                hp: {
+                    current: 50,
+                    total: 50
+                },
+                energy: {
+                    current: 40,
+                    total: 40
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "NuNeok",
+                speed: 4,
+                str: 12,
+                reach: 5,
+                hp: {
+                    current: 30,
+                    total: 30
+                },
+                energy: {
+                    current: 40,
+                    total: 40
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Tuaig",
+                speed: 2,
+                str: 15,
+                reach: 2,
+                hp: {
+                    current: 60,
+                    total: 60
+                },
+                energy: {
+                    current: 20,
+                    total: 20
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Wri",
+                speed: 6,
+                str: 8,
+                reach: 3,
+                hp: {
+                    current: 50,
+                    total: 50
+                },
+                energy: {
+                    current: 20,
+                    total: 20
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Peprop",
+                speed: 4,
+                str: 10,
+                reach: 2,
+                hp: {
+                    current: 65,
+                    total: 65
+                },
+                energy: {
+                    current: 20,
+                    total: 20
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Igther",
+                speed: 3,
+                str: 8,
+                reach: 5,
+                hp: {
+                    current: 80,
+                    total: 80
+                },
+                energy: {
+                    current: 20,
+                    total: 20
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }, {
+                name: "Zevahc",
+                speed: 4,
+                str: 13,
+                reach: 6,
+                hp: {
+                    current: 69,
+                    total: 69
+                },
+                energy: {
+                    current: 20,
+                    total: 42
+                },
+                weight: {
+                    current: 10,
+                    total: 25
+                }
+            }]
+        };
+        class timedTrigger {
+            constructor(t, i) {
+                this.secs = t, this.actions = i, this.begin = Date.now()
+            }
+        }
+        class spatialTrigger {
+            constructor(t, i, e) {
+                this.x = t, this.y = i, this.actions = e, this.active = !0
+            }
+        }
+        class spriteSheet {
+            constructor(t, i, e, o) {
+                this.sheet = t, this.sheetX = i, this.sheetY = e, this.frames = o
+            }
+        }
+        class Instance {
+            constructor(t, i, e, o = 1, s = 0) {
+                if (this.sheet = t, this.positionX = i, this.positionY = e, this.currentFrame = 0, this.animation = "walkingN", this.walking = -1, this.walkingRoute = void 0, this.movingTo = {
+                        x: -1,
+                        y: -1
+                    }, this.speed = o, this.entering = !1, this.attacking = -1, this.inventory = [RefData.Items.info.hp, RefData.Items.info.energy], 0 == s) {
+                    const t = () => {
+                        const t = Math.floor(Math.random() * RefData.characters.length),
+                            i = {...RefData.characters[t]
+                            };
+                        return RefData.characters.splice(i, 1), i
+                    };
+                    this.stats = t()
+                } else {
+                    const t = Math.floor(Math.random() * s) + 1;
+                    this.stats = {
+                        name: 1 === s ? "K.I.L.L." : 2 === s ? "S.L.A.Y." : "D.I.E.",
+                        speed: 3,
+                        str: t * (t + 1),
+                        reach: 6,
+                        hp: {
+                            current: 1 === s ? 35 : 2 === s ? 50 : 86,
+                            total: 1 === s ? 35 : 2 === s ? 50 : 86
+                        },
+                        energy: {
+                            current: 80,
+                            total: 80
+                        },
+                        weight: {
+                            current: 10,
+                            total: 25
+                        }
+                    }
+                }
+            }
+            move(t, i) {
+                this.positionX === t && this.positionY < i ? this.animation = "walkingN" : this.positionX < t && this.positionY < i ? this.animation = "walkingNW" : this.positionX < t && this.positionY === i ? this.animation = "walkingW" : this.positionX < t && this.positionY > i ? this.animation = "walkingSW" : this.positionX === t && this.positionY > i ? this.animation = "walkingS" : this.positionX > t && this.positionY > i ? this.animation = "walkingSE" : this.positionX > t && this.positionY === i ? this.animation = "walkingE" : this.positionX > t && this.positionY < i && (this.animation = "walkingNE"), -1 == this.walking && (this.walking = 0), this.movingTo.x = t, this.movingTo.y = i
+            }
+            attack(t, i, e) {
+                Isometric.enemiesHighlighted = !1;
+                var o = function(t, i) {
+                    for (var e = 0; e < Isometric.enemies.length; e++)
+                        if (Isometric.enemies[e].positionX == t && Isometric.enemies[e].positionY == i) return e;
+                    return null
+                }(t, i);
+                if (e) {
+                    if (Terminal.selected.stats.energy.current >= 20) Terminal.selected.stats.energy.current -= 20, Terminal.autoSelect(), 2 == Math.floor(2 * Math.random() + 1) ? (Isometric.enemies[o].stats.hp.current = 0, Terminal.hack(Isometric.enemies[o].stats.name, !0), Isometric.deleteEnemy(o)) : Terminal.hack(Isometric.enemies[o].stats.name, !1);
+                    else Terminal.notEnoughEnergy()
+                } else {
+                    const t = 5 + Math.floor(Math.random() * (this.stats.str / 2)) + Math.floor(this.stats.str / 2),
+                        i = 5 + Math.floor(Math.random() * Isometric.enemies[o].stats.str);
+                    if (Isometric.enemies[o].stats.hp.current -= t, this.stats.hp.current -= i, Isometric.enemies[o].stats.hp.current > 0) this.stats.hp.current > 0 ? Terminal.attack(Isometric.enemies[o].stats.name, t, i) : (Terminal.clean(), Isometric.deleteCharacter(Terminal.selectedIndex), Terminal.updateIndex(), Isometric.selectedChar = -1);
+                    else {
+                        const t = Isometric.enemies[o].stats.name;
+                        Isometric.deleteEnemy(o), Terminal.updateIndex(), Isometric.selectedChar = -1, this.stats.hp.current > 0 ? Terminal.kills(this.stats.name, t) : (Terminal.doubleKill(this.stats.name, t), Isometric.deleteCharacter(Terminal.selectedIndex), Terminal.updateIndex(), Terminal.selected = void 0, Isometric.selectedChar = -1)
+                    }
+                }
+                this.positionX === t && this.positionY < i ? this.animation = "attackingN" : this.positionX < t && this.positionY < i ? this.animation = "attackingNW" : this.positionX < t && this.positionY === i ? this.animation = "attackingW" : this.positionX < t && this.positionY > i ? this.animation = "attackingSW" : this.positionX === t && this.positionY > i ? this.animation = "attackingS" : this.positionX > t && this.positionY > i ? this.animation = "attackingSE" : this.positionX > t && this.positionY === i ? this.animation = "attackingE" : this.positionX > t && this.positionY < i && (this.animation = "attackingNE"), this.attacking = 0
+            }
+            useItem(t) {
+                for (let i = 0; i < this.inventory.length; i++)
+                    if (this.inventory[i].type == t) {
+                        this.inventory.splice(i, 1);
+                        break
+                    }
+                return this.stats.weight.current -= 5, this.stats[t].current <= this.stats[t].total - 50 ? (this.stats[t].current += 50, `${this.stats.name}'s ${"hp"===t?"health":"energy"} has been restored`) : (this.stats[t].current = this.stats[t].total, `${this.stats.name}'s ${"hp"===t?"health":"energy"}has been MAXED`)
+            }
+            lootItem() {
+                const t = Isometric.itemMatrix[this.positionX][this.positionY];
+                if (this.stats.weight.current + RefData.Items.info[t].weight <= this.stats.weight.total) {
+                    this.stats.weight.current += RefData.Items.info[t].weight, this.inventory.push(RefData.Items.info[t]), Terminal.pickupItem(this.stats.name, RefData.Items.info[t].name);
+                    for (let t = 0; t < Isometric.itemQueue.length; t++) Isometric.itemQueue[t].positionX == this.positionX && Isometric.itemQueue[t].positionY == this.positionY && Isometric.itemQueue.splice(t, 1);
+                    for (let t = 0; t < Isometric.spatialTArray.length; t++) Isometric.spatialTArray[t].x == this.positionX && Isometric.spatialTArray[t].y == this.positionY && Isometric.spatialTArray.splice(t, 1);
+                    Isometric.itemMatrix[this.positionX][this.positionY] = void 0
+                } else Terminal.cantPickupItem(this.stats.name)
+            }
+        }
+        var IsometricMap = {
+            forbiddenTiles: [2],
+            triggers: [{
+                type: "timed",
+                secs: 0,
+                actions: "displayDialogP(0)"
+            }, {
+                type: "timed",
+                secs: 0,
+                actions: "centerCamera(8,7), glow(49,0)"
+            }, {
+                type: "spatial",
+                x: 49,
+                y: 0,
+                actions: 'displayDialog(1),gameOver("You\'ve arrived to the exit. You won")'
+            }],
+            dialogs: [{
+                message: "Welcome to the game, your objective is to get out of the ship by reaching the glowing tile at the north corner."
+            }, {
+                message: "YOU ONLY HAD ONE JOB! and you managed to screw up"
+            }],
+            allies: [{
+                type: 0,
+                positionX: 0,
+                positionY: 2
+            }, {
+                type: 0,
+                positionX: 0,
+                positionY: 4
+            }, {
+                type: 0,
+                positionX: 0,
+                positionY: 7
+            }, {
+                type: 0,
+                positionX: 0,
+                positionY: 9
+            }],
+            enemies: [{
+                level: 1,
+                type: 0,
+                positionX: 5,
+                positionY: 43
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 4,
+                positionY: 39
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 0,
+                positionY: 35
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 5,
+                positionY: 27
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 0,
+                positionY: 23
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 0,
+                positionY: 22
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 13,
+                positionY: 9
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 8,
+                positionY: 12
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 7,
+                positionY: 22
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 7,
+                positionY: 23
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 23,
+                positionY: 16
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 23,
+                positionY: 17
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 23,
+                positionY: 18
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 23,
+                positionY: 19
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 23,
+                positionY: 6
+            }, {
+                level: 1,
+                type: 0,
+                positionX: 23,
+                positionY: 7
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 30,
+                positionY: 19
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 31,
+                positionY: 19
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 32,
+                positionY: 19
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 21,
+                positionY: 38
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 21,
+                positionY: 39
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 21,
+                positionY: 40
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 21,
+                positionY: 41
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 21,
+                positionY: 42
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 44,
+                positionY: 34
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 45,
+                positionY: 34
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 43,
+                positionY: 23
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 34,
+                positionY: 11
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 35,
+                positionY: 11
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 37,
+                positionY: 1
+            }, {
+                level: 2,
+                type: 0,
+                positionX: 48,
+                positionY: 10
+            }, {
+                level: 3,
+                type: 0,
+                positionX: 41,
+                positionY: 1
+            }, {
+                level: 3,
+                type: 0,
+                positionX: 48,
+                positionY: 6
+            }, {
+                level: 3,
+                type: 0,
+                positionX: 47,
+                positionY: 5
+            }, {
+                level: 3,
+                type: 0,
+                positionX: 49,
+                positionY: 5
+            }, {
+                level: 3,
+                type: 0,
+                positionX: 48,
+                positionY: 2
+            }],
+            characters: [{
+                type: 0,
+                positionX: 0,
+                positionY: 2
+            }, {
+                type: 0,
+                positionX: 0,
+                positionY: 4
+            }, {
+                type: 0,
+                positionX: 0,
+                positionY: 7
+            }, {
+                type: 0,
+                positionX: 0,
+                positionY: 9
+            }],
+            tiles: ["images/dirtHigh.png", "images/grass.png", "images/water.png", "images/blank.png"],
+            limitedTiles: {
+                2: "all",
+                3: "all",
+                18: ["Southeast", "East", "Northeast"],
+                19: ["North", "Northwest", "Southwest", "South", "Southeast", "Northeast"]
+            },
+            chars: [{
+                src: "images/cowboyssN.png",
+                sheetX: 14,
+                sheetY: 8,
+                frames: {
+                    walkingN: {
+                        from: 0,
+                        to: 10
+                    },
+                    attackingN: {
+                        from: 11,
+                        to: 13
+                    },
+                    walkingNW: {
+                        from: 14,
+                        to: 24
+                    },
+                    attackingNW: {
+                        from: 25,
+                        to: 27
+                    },
+                    walkingW: {
+                        from: 28,
+                        to: 38
+                    },
+                    attackingW: {
+                        from: 39,
+                        to: 41
+                    },
+                    walkingSW: {
+                        from: 42,
+                        to: 52
+                    },
+                    attackingSW: {
+                        from: 53,
+                        to: 55
+                    },
+                    walkingS: {
+                        from: 56,
+                        to: 66
+                    },
+                    attackingS: {
+                        from: 67,
+                        to: 69
+                    },
+                    walkingSE: {
+                        from: 70,
+                        to: 80
+                    },
+                    attackingSE: {
+                        from: 81,
+                        to: 83
+                    },
+                    walkingE: {
+                        from: 84,
+                        to: 94
+                    },
+                    attackingE: {
+                        from: 95,
+                        to: 97
+                    },
+                    walkingNE: {
+                        from: 98,
+                        to: 108
+                    },
+                    attackingNE: {
+                        from: 109,
+                        to: 111
+                    }
+                }
+            }],
+            map: [
+                [3, 3, 0, 3, 0, 3, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0],
+                [3, 3, 1, 3, 1, 3, 3, 1, 1, 1, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0, 3, 3, 0, 3, 0, 0, 0, 0],
+                [3, 3, 1, 3, 1, 3, 3, 1, 1, 1, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3, 3, 0, 3, 3, 0, 0, 0],
+                [3, 3, 1, 3, 1, 3, 3, 1, 1, 1, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3, 3, 0, 3, 3, 3, 0, 0],
+                [3, 1, 1, 3, 1, 3, 3, 1, 1, 1, 3, 3, 3, 3, 3, 3, 1, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 3, 3, 3, 3, 0, 3, 3, 3, 0, 0],
+                [1, 1, 3, 3, 1, 3, 3, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 0, 0],
+                [1, 3, 3, 1, 1, 3, 3, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 0, 3, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0],
+                [1, 3, 1, 1, 3, 3, 3, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 3, 3, 0, 0, 0, 0, 0],
+                [1, 3, 1, 3, 3, 3, 3, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0],
+                [1, 3, 1, 3, 3, 3, 3, 3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+                [1, 0, 1, 3, 3, 3, 3, 3, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+                [1, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+                [3, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 3, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 3, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 3, 0, 0, 1, 3, 3, 3, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 1, 3, 3, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3],
+                [3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3],
+                [0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3],
+                [0, 3, 3, 0, 1, 3, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 1, 1, 0, 1, 3, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 0, 0, 0, 3, 0, 0, 1, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 1, 1, 0, 0, 3, 0, 0, 1, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3],
+                [0, 3, 3, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 0, 3, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3],
+                [3, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 1, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+                [0, 3, 3, 0, 0, 0, 3, 3, 3, 0, 3, 3, 1, 0, 0, 0, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 1, 0, 0, 0, 3, 3, 3, 0, 3, 3, 1, 0, 0, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3],
+                [3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 1, 0, 0, 0, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 1, 0, 0, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3],
+                [0, 3, 3, 3, 1, 0, 1, 0, 3, 1, 1, 0, 0, 0, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 1, 0, 3, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 3, 3, 3, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 1, 1, 0, 1, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 1, 1, 0, 1, 0, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 1, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 1, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 1, 3, 3, 3, 3],
+                [3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, 1, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 1, 3, 3, 3, 3],
+                [3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 0, 0, 1, 1, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [3, 0, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 2, 3, 3, 3, 3, 0],
+                [3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 3, 3, 3, 0, 0],
+                [0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 1, 0, 0, 3, 3, 3, 2, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 0, 0, 0],
+                [3, 1, 3, 3, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 0, 0, 0, 3, 2, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0],
+                [0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0],
+                [3, 3, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+            ]
+        };
+</script>
+<link rel=icon href=images/favicon.png type=image/png sizes=16x16>
+</head>
+<body>
+<img id=overlay src=images/gwgc201819_overlay.png>
+<div class=gameOver>
+<div class=header>Congratulations</div>
+<div class=reason></div>
+</div>
+<div class=crt id=dialog>
+<div class=message></div>
+<div class=dot>● click to continue ●</div>
+</div>
+<div class=crt id=terminal></div>
+</body>
+</html>
